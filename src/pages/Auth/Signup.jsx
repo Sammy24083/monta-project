@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { Briefcase, UserCircle } from 'lucide-react';
+import { Briefcase, UserCircle, Globe } from 'lucide-react';
 import { cn } from '../../utils/utils';
 
 export const Signup = () => {

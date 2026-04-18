@@ -133,5 +133,6 @@ export const IndividualWizard = () => {
           </Button>
         </div>
     </div>
+    </div>
   );
 };

@@ -224,5 +224,6 @@ export const CorporateWizard = () => {
           </Button>
         </div>
     </div>
+    </div>
   );
 };

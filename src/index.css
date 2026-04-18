@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .monta-card {
+    @apply bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 shadow-sm transition-colors duration-300;
+  }
+  
+  .monta-text-primary {
+    @apply text-slate-900 dark:text-white transition-colors duration-300;
+  }
+  
+  .monta-text-secondary {
+    @apply text-slate-500 dark:text-slate-400 transition-colors duration-300;
+  }
+
+  .monta-bg-page {
+    @apply bg-slate-50 dark:bg-slate-950 transition-colors duration-300;
+  }
+}
