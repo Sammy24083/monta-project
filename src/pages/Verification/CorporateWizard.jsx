@@ -60,20 +60,26 @@ export const CorporateWizard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4 sm:px-6">
-      <div className="w-full max-w-2xl mb-8">
+    <div className="min-h-screen bg-slate-50/50 flex flex-col items-center py-16 px-4">
+      <div className="w-full max-w-xl mb-10">
          <ProgressBar currentStep={step} totalSteps={totalSteps} />
+         <div className="flex justify-between mt-3 px-1">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Enterprise Onboarding</span>
+            <span className="text-[10px] font-bold text-monta-blue uppercase tracking-widest">Stage {step} of {totalSteps}</span>
+         </div>
       </div>
 
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="p-6 sm:p-8">
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-premium border border-slate-200/60 overflow-hidden">
+        <div className="p-8 pb-10">
           <AnimatePresence mode="wait">
             
             {step === 1 && (
-              <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Company Information</h2>
-                <p className="text-slate-500 mb-6">Enter your registered business details.</p>
-                <div className="space-y-5">
+              <motion.div key="step1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <div className="mb-8 text-center sm:text-left">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Business Registration</h2>
+                  <p className="text-[13px] text-slate-500 mt-1 font-medium">Verify your legal entity credentials.</p>
+                </div>
+                <div className="space-y-4">
                   <Input 
                     label="CAC Registration Number" 
                     placeholder="e.g. RC123456" 
@@ -82,102 +88,125 @@ export const CorporateWizard = () => {
                   />
                   <Input 
                     label="Tax Identification Number (TIN)" 
-                    placeholder="Enter TIN" 
+                    placeholder="Enter 12-digit TIN" 
                     value={formData.tin}
                     onChange={(e) => setFormData({...formData, tin: e.target.value})}
                   />
-                  <FileUpload label="Upload CAC Certificate" />
-                  <FileUpload label="Upload Status Report / MemArt" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <FileUpload label="CAC Certificate" />
+                    <FileUpload label="Status Report" />
+                  </div>
                 </div>
               </motion.div>
             )}
 
             {step === 2 && (
-              <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Proprietor Details</h2>
-                <p className="text-slate-500 mb-6">Add the principal officers of the business.</p>
+              <motion.div key="step2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <div className="mb-8 text-center sm:text-left">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Governance & Control</h2>
+                  <p className="text-[13px] text-slate-500 mt-1 font-medium">Identify the beneficial owners and directors.</p>
+                </div>
                 
                 <Select 
-                  label="Business Type" 
+                  label="Entity Legal Structure" 
                   value={formData.proprietorType}
                   onChange={(e) => setFormData({...formData, proprietorType: e.target.value})}
                   options={[
                     { value: 'sole', label: 'Sole Proprietorship' },
-                    { value: 'partnership', label: 'Partnership / LLC' }
+                    { value: 'partnership', label: 'Private Limited Company (LTD)' }
                   ]}
                   className="mb-6"
                 />
 
-                <div className="space-y-6">
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                   {formData.proprietors.map((p, index) => (
-                    <div key={p.id} className="p-5 border border-slate-200 rounded-xl bg-slate-50 relative">
-                      <h4 className="font-semibold text-slate-900 mb-4">Director {index + 1}</h4>
-                      {formData.proprietors.length > 1 && (
-                        <button 
-                          onClick={() => removeProprietor(p.id)}
-                          className="absolute top-4 right-4 text-red-500 hover:bg-red-50 p-1.5 rounded-md"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      )}
+                    <div key={p.id} className="p-4 border border-slate-100 rounded-xl bg-slate-50/50 relative group">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Principal Officer {index + 1}</span>
+                        {formData.proprietors.length > 1 && (
+                          <button 
+                            onClick={() => removeProprietor(p.id)}
+                            className="text-red-400 hover:text-red-600 transition-colors p-1"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <Input 
-                          label="Full Name" 
+                          label="Full Legal Name" 
+                          placeholder="As seen on ID"
                           value={p.name}
                           onChange={(e) => updateProprietor(p.id, 'name', e.target.value)}
                         />
                         <Input 
-                          label="Email Address" 
+                          label="Corporate Email" 
                           type="email"
+                          placeholder="sam@company.com"
                           value={p.email}
                           onChange={(e) => updateProprietor(p.id, 'email', e.target.value)}
                         />
-                        <Input 
-                          label="BVN" 
-                          className="md:col-span-2"
-                          value={p.bvn}
-                          onChange={(e) => updateProprietor(p.id, 'bvn', e.target.value)}
-                        />
+                        <div className="sm:col-span-2">
+                          <Input 
+                            label="Personal BVN" 
+                            placeholder="11-digit verification number"
+                            value={p.bvn}
+                            onChange={(e) => updateProprietor(p.id, 'bvn', e.target.value)}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 {formData.proprietorType === 'partnership' && (
-                  <Button variant="outline" className="w-full mt-4" onClick={addProprietor}>
-                    <Plus className="w-4 h-4 mr-2" /> Add Another Director
-                  </Button>
+                  <button onClick={addProprietor} className="w-full mt-4 flex items-center justify-center p-2.5 border border-dashed border-slate-300 rounded-xl text-slate-400 text-[12px] font-bold hover:border-monta-blue hover:text-monta-blue transition-all group">
+                    <Plus className="w-3.5 h-3.5 mr-2" /> Add Additional Director
+                  </button>
                 )}
               </motion.div>
             )}
 
             {step === 3 && (
-              <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Authorized Signature</h2>
-                <p className="text-slate-500 mb-6">Please provide an on-screen signature representing the business mandate.</p>
+              <motion.div key="step3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <div className="mb-8 text-center sm:text-left">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Authorized Mandate</h2>
+                  <p className="text-[13px] text-slate-500 mt-1 font-medium">Digital signature for account operations.</p>
+                </div>
                 
-                <h4 className="text-sm font-medium text-slate-700 mb-2">Draw Signature Here:</h4>
-                <SignaturePad ref={sigPadRef} />
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-1 shadow-inner">
+                  <SignaturePad ref={sigPadRef} />
+                </div>
+                <p className="text-[11px] text-slate-400 mt-4 text-center">By signing, you agree to our <span className="font-bold text-slate-600">Corporate Terms of Service</span>.</p>
               </motion.div>
             )}
 
             {step === 4 && (
-              <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="text-center">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Final Verification</h2>
-                <p className="text-slate-500 mb-8">Director facial verification against registered ID.</p>
+              <motion.div key="step4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center">
+                <div className="mb-8">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Security Protocol</h2>
+                  <p className="text-[13px] text-slate-500 mt-1 font-medium">Final biometric check for the lead director.</p>
+                </div>
                 
-                <div className="relative w-64 h-64 mx-auto rounded-full border-4 border-dashed border-slate-300 bg-slate-100 overflow-hidden flex items-center justify-center mb-8">
+                <div className="relative w-56 h-56 mx-auto rounded-full border-4 border-slate-100 bg-slate-50/50 shadow-inner flex items-center justify-center mb-8 overflow-hidden group">
                   {isFaceVerified ? (
-                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex flex-col items-center text-green-500">
-                      <CheckCircle className="w-16 h-16 mb-2" />
-                      <span className="font-semibold">Match Confirmed!</span>
+                    <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center">
+                      <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-500/20">
+                         <CheckCircle className="w-10 h-10" />
+                      </div>
+                      <span className="text-[13px] font-bold text-green-600 mt-4">Identity Confirmed</span>
                     </motion.div>
                   ) : (
                     <div className="text-slate-400 flex flex-col items-center">
-                       <Camera className="w-12 h-12 mb-2" />
-                       <Button size="sm" onClick={simulateFaceVerification}>Simulate Camera Scan</Button>
+                       <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 border border-slate-100">
+                          <Camera className="w-7 h-7 text-slate-300" />
+                       </div>
+                       <Button size="sm" variant="outline" className="text-[11px] font-bold" onClick={simulateFaceVerification}>Simulate Biometrics</Button>
                     </div>
+                  )}
+                  {!isFaceVerified && (
+                     <div className="absolute top-0 left-0 w-full h-1 bg-monta-blue animate-scan opacity-40"></div>
                   )}
                 </div>
               </motion.div>
@@ -186,14 +215,16 @@ export const CorporateWizard = () => {
           </AnimatePresence>
         </div>
         
-        <div className="p-6 bg-slate-50 border-t border-slate-100 flex justify-between">
-          <Button variant="ghost" onClick={prevStep} disabled={step === 1}>Back</Button>
-          <Button onClick={nextStep} disabled={
+        <div className="p-5 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between">
+          <Button variant="ghost" size="sm" className="font-bold text-slate-400" onClick={prevStep} disabled={step === 1}>Previous</Button>
+          <Button size="sm" className="font-bold px-8 shadow-blue-500/10" onClick={nextStep} disabled={
             (step === 4 && !isFaceVerified)
           }>
-            {step === totalSteps ? "Finish & Open Account" : "Continue"}
+            {step === totalSteps ? "Establish Enterprise Account" : "Save & Continue"}
           </Button>
         </div>
+      </div>
+    </div>
       </div>
     </div>
   );

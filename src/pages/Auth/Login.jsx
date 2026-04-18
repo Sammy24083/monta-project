@@ -16,49 +16,56 @@ export const Login = () => {
   return (
     <div className="min-h-screen flex bg-white">
       {/* Left Pane - Brand */}
-      <div className="hidden lg:flex lg:w-1/2 bg-monta-dark flex-col justify-between p-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-black/50 z-0"></div>
+      <div className="hidden lg:flex lg:w-1/2 bg-[#0B0F19] flex-col justify-between p-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent z-0"></div>
         <div className="relative z-10">
-          <Link to="/" className="flex items-center space-x-2 shrink-0">
-            <div className="w-8 h-8 bg-monta-blue rounded-lg flex flex-col items-center justify-center">
-              <span className="text-white font-bold text-xl leading-none pb-0.5">M</span>
+          <Link to="/" className="flex items-center space-x-2.5 shrink-0">
+            <div className="w-8 h-8 bg-monta-blue rounded-lg flex flex-col items-center justify-center shadow-lg shadow-blue-500/20">
+              <span className="text-white font-bold text-xl leading-none">M</span>
             </div>
             <span className="text-xl font-bold text-white tracking-tight">Monta</span>
           </Link>
         </div>
-        <div className="relative z-10 max-w-md">
-          <h2 className="text-4xl font-bold text-white mb-6 leading-tight">Manage your finances like a pro.</h2>
-          <p className="text-slate-300 text-lg">Join thousands of modern businesses who rely on Monta to scale their operations efficiently.</p>
+        <div className="relative z-10">
+          <h2 className="text-4xl xl:text-5xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight">Financial infrastructure for modern teams.</h2>
+          <p className="text-slate-400 text-lg max-w-sm font-medium">Streamline your business operations with our tailored banking solutions.</p>
+        </div>
+        <div className="relative z-10 flex items-center space-x-2">
+           <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+           <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">REGULATED BY CBN</span>
         </div>
       </div>
 
       {/* Right Pane - Form */}
-      <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-24 xl:px-32 bg-slate-50/50">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto w-full max-w-sm lg:max-w-md"
+          transition={{ duration: 0.4 }}
+          className="mx-auto w-full max-w-[380px]"
         >
-          <div className="mb-10 lg:hidden">
-             <Link to="/" className="flex items-center space-x-2 shrink-0">
+          <div className="mb-12 lg:hidden">
+             <Link to="/" className="flex items-center space-x-2.5 shrink-0">
               <div className="w-8 h-8 bg-monta-blue rounded-lg flex flex-col items-center justify-center">
-                <span className="text-white font-bold text-xl leading-none pb-0.5">M</span>
+                <span className="text-white font-bold text-xl leading-none">M</span>
               </div>
               <span className="text-xl font-bold text-monta-dark tracking-tight">Monta</span>
             </Link>
           </div>
 
-          <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Welcome back</h2>
-          <p className="text-sm text-slate-500 mb-8">Please enter your details to sign in.</p>
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Welcome back</h2>
+            <p className="text-[13px] text-slate-500 mt-1 font-medium">Continue to your business dashboard.</p>
+          </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-4">
             <Input 
               label="Email Address" 
               type="email" 
-              placeholder="Enter your email" 
+              placeholder="e.g. sam@company.com" 
               required 
             />
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Input 
                 label="Password" 
                 type="password" 
@@ -66,16 +73,16 @@ export const Login = () => {
                 required 
               />
               <div className="flex justify-end">
-                <Link to="#" className="text-sm font-medium text-monta-blue hover:underline">Forgot password?</Link>
+                <Link to="#" className="text-[12px] font-bold text-monta-blue hover:text-blue-700 transition-colors">Recovery password?</Link>
               </div>
             </div>
             
-            <Button type="submit" className="w-full text-lg mt-2">Sign In</Button>
+            <Button type="submit" className="w-full font-bold mt-4 shadow-blue-500/10">Sign In</Button>
           </form>
 
-          <div className="mt-8 text-center text-sm text-slate-600">
-            Don't have an account? <Link to="/signup" className="font-semibold text-monta-blue hover:underline">Sign up</Link>
-          </div>
+          <p className="mt-10 text-center text-[13px] text-slate-500 font-medium">
+            New to Monta? <Link to="/signup" className="font-bold text-monta-blue hover:text-blue-700 transition-colors">Create an account</Link>
+          </p>
         </motion.div>
       </div>
     </div>
