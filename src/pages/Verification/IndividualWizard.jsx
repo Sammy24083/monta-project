@@ -132,9 +132,6 @@ export const IndividualWizard = () => {
             {step === totalSteps ? "Launch Dashboard" : "Save & Continue"}
           </Button>
         </div>
-      </div>
-    </div>
-      </div>
     </div>
   );
 };

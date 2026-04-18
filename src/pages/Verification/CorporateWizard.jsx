@@ -223,9 +223,6 @@ export const CorporateWizard = () => {
             {step === totalSteps ? "Establish Enterprise Account" : "Save & Continue"}
           </Button>
         </div>
-      </div>
-    </div>
-      </div>
     </div>
   );
 };
